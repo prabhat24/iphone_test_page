@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en" class="main">
+<center>
+
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>VideoCall Testing</title>
+        <h2>VideoCall Testing</h2>
+    </head>
+
+    <style>
+        body {
+            font-family: monospace;
+            color: #0f0;
+            padding: 20px;
+            background-color: darkblue;
+        }
+
+        #output {
+            white-space: pre-wrap;
+            border: 1px solid #0f0;
+            padding: 10px;
+            height: 300px;
+            overflow-y: auto;
+        }
+    </style>
+
+    <body>
+        <h2>Permission Logger (Live Console)</h2>
+        <div id="output">Starting log...</div>
+        <br><br>
+        Click on the video to start the media
+        <br><br>
+        <div id="videoElements">
+            <video id="agentVideo" autoplay playsinline loop controls>
+                <source type="video/mp4" src="test_video_30.mp4">
+            </video>
+            <br>
+            <video id="customerVideo" autoplay playsinline muted controls></video>
+        </div>
+        <br>
+        Select Audio Output
+        <br><br>
+        <select id="audioSelector"></select>
+        <button onclick="startLocalVideo()">Start Local Video</button>
+        <button onclick="stopLocalVideo()">Stop Local Video</button>
+    </body>
+
+    <script src="script.js"></script>
+    <link rel="stylesheet" href="style.css">
+</center>
+
+</html>
