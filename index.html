@@ -13,9 +13,9 @@
     <style>
         body {
             font-family: monospace;
-            color: #0f0;
+            color: rgb(86, 184, 86);
             padding: 20px;
-            background-color: darkblue;
+            background-color: rgb(30, 30, 32);
         }
 
         #output {
@@ -24,21 +24,52 @@
             padding: 10px;
             height: 300px;
             overflow-y: auto;
+            font-family: 'Courier New', monospace;
+            line-height: 1.4;
+        }
+
+        .log-entry {
+            display: block;
+            margin-bottom: 2px;
+        }
+
+        .log-timestamp {
+            color: #ffff00;
+            font-weight: bold;
+            margin-right: 10px;
+            min-width: 180px;
+            display: inline-block;
+        }
+
+        .log-message {
+            color: #00ff00;
+        }
+
+        .log-error {
+            color: #ff6666;
+        }
+
+        .log-warning {
+            color: #ffaa00;
+        }
+
+        .log-info {
+            color: #66aaff;
         }
     </style>
 
     <body>
         <h2>Permission Logger (Live Console)</h2>
-        <div id="output">Starting log...</div>
+        <div id="output"></div>
         <br><br>
         Click on the video to start the media
         <br><br>
         <div id="videoElements">
-            <video id="agentVideo" autoplay playsinline loop controls>
+            <video id="agentVideo" autoplay="true" playsinline loop controls>
                 <source type="video/mp4" src="big_buck_av1_full.mp4">
             </video>
             <br>
-            <video id="customerVideo" autoplay playsinline muted controls></video>
+            <video id="customerVideo" autoplay="true" playsinline muted="true" controls></video>
         </div>
         <br>
         Select Audio Output
