@@ -27,6 +27,28 @@
             font-family: 'Courier New', monospace;
             line-height: 1.4;
             text-align: left;
+            scrollbar-width: thin;
+            scrollbar-color: #00ff00 #222;
+        }
+
+        /* Custom scrollbar for webkit browsers */
+        #output::-webkit-scrollbar {
+            width: 12px;
+        }
+
+        #output::-webkit-scrollbar-track {
+            background: #222;
+            border-radius: 6px;
+        }
+
+        #output::-webkit-scrollbar-thumb {
+            background: #00ff00;
+            border-radius: 6px;
+            border: 2px solid #222;
+        }
+
+        #output::-webkit-scrollbar-thumb:hover {
+            background: #00dd00;
         }
 
         .log-entry {
@@ -79,6 +101,7 @@
         <h2>Permission Logger (Live Console)</h2>
         <div id="output"></div>
         <button class="copy-button" onclick="copyLogsToClipboard()">Copy Logs to Clipboard</button>
+        <button class="copy-button" onclick="goToLatestLog()" style="margin-left: 10px;">Go to Latest</button>
         <br><br>
         Click on the video to start the media
         <br><br>

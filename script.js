@@ -200,6 +200,9 @@ const logs = [];
 function addLog(message, type = 'info') {
     const timestamp = new Date().toISOString().replace('T', ' ').substr(0, 19);
     
+    // Check if user is at or near the bottom before adding new content
+    const isNearBottom = output.scrollTop + output.clientHeight >= output.scrollHeight - 20;
+    
     // Create a log entry element
     const logEntry = document.createElement('div');
     logEntry.className = 'log-entry';
@@ -223,12 +226,22 @@ function addLog(message, type = 'info') {
     
     // Add to output as HTML
     output.appendChild(logEntry);
-    output.scrollTop = output.scrollHeight;
+    
+    // Only auto-scroll if user was already at or near the bottom
+    if (isNearBottom) {
+        output.scrollTop = output.scrollHeight;
+    }
 }
 
 // Function to update output display (for backward compatibility)
 function updateOutput() {
-    output.scrollTop = output.scrollHeight;
+    // Check if user is at or near the bottom before auto-scrolling
+    const isNearBottom = output.scrollTop + output.clientHeight >= output.scrollHeight - 20;
+    
+    // Only auto-scroll if user was already at or near the bottom
+    if (isNearBottom) {
+        output.scrollTop = output.scrollHeight;
+    }
 }
 
 // Initialize logging
@@ -475,4 +488,10 @@ function fallbackCopyToClipboard(text) {
     } catch (err) {
         addLog('Fallback copy failed: ' + err.message, 'error');
     }
+}
+
+// Function to scroll to the latest log entry
+function goToLatestLog() {
+    output.scrollTop = output.scrollHeight;
+    addLog('Scrolled to latest log entry', 'info');
 }
