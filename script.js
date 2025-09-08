@@ -428,3 +428,51 @@ if (document.readyState === 'loading') {
 } else {
     startPlayingVideoWithInteraction();
 }
+
+// Function to copy all logs to clipboard
+function copyLogsToClipboard() {
+    try {
+        // Get all log text from the logs array
+        const allLogsText = logs.join('\n');
+        
+        // Use the modern clipboard API if available
+        if (navigator.clipboard && window.isSecureContext) {
+            navigator.clipboard.writeText(allLogsText).then(() => {
+                addLog('Logs copied to clipboard successfully!', 'info');
+            }).catch(err => {
+                addLog('Failed to copy logs to clipboard: ' + err.message, 'error');
+                fallbackCopyToClipboard(allLogsText);
+            });
+        } else {
+            // Fallback method for older browsers or non-secure contexts
+            fallbackCopyToClipboard(allLogsText);
+        }
+    } catch (err) {
+        addLog('Error copying logs: ' + err.message, 'error');
+    }
+}
+
+// Fallback clipboard copy method
+function fallbackCopyToClipboard(text) {
+    try {
+        const textArea = document.createElement('textarea');
+        textArea.value = text;
+        textArea.style.position = 'fixed';
+        textArea.style.left = '-999999px';
+        textArea.style.top = '-999999px';
+        document.body.appendChild(textArea);
+        textArea.focus();
+        textArea.select();
+        
+        const successful = document.execCommand('copy');
+        document.body.removeChild(textArea);
+        
+        if (successful) {
+            addLog('Logs copied to clipboard using fallback method!', 'info');
+        } else {
+            addLog('Failed to copy logs to clipboard', 'error');
+        }
+    } catch (err) {
+        addLog('Fallback copy failed: ' + err.message, 'error');
+    }
+}

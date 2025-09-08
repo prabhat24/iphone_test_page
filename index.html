@@ -26,6 +26,7 @@
             overflow-y: auto;
             font-family: 'Courier New', monospace;
             line-height: 1.4;
+            text-align: left;
         }
 
         .log-entry {
@@ -56,11 +57,28 @@
         .log-info {
             color: #66aaff;
         }
+
+        .copy-button {
+            background-color: #444;
+            color: #00ff00;
+            border: 1px solid #0f0;
+            padding: 8px 16px;
+            margin-top: 10px;
+            cursor: pointer;
+            font-family: monospace;
+            border-radius: 4px;
+            transition: background-color 0.2s;
+        }
+
+        .copy-button:hover {
+            background-color: #555;
+        }
     </style>
 
     <body>
         <h2>Permission Logger (Live Console)</h2>
         <div id="output"></div>
+        <button class="copy-button" onclick="copyLogsToClipboard()">Copy Logs to Clipboard</button>
         <br><br>
         Click on the video to start the media
         <br><br>
