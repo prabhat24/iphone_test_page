@@ -404,7 +404,7 @@ function simulateUserInteraction() {
 
 function startPlayingVideoWithInteraction() {
     // First simulate user interaction
-    simulateUserInteraction();
+    // simulateUserInteraction();
     
     // Small delay to ensure the interaction is registered
     setTimeout(() => {
