@@ -409,6 +409,7 @@ function startPlayingVideoWithInteraction() {
     // Small delay to ensure the interaction is registered
     setTimeout(() => {
         startPlayingVideo();
+        addLog(`Customer video debug message ${document.getElementById('customerVideo').playing}, ${JSON.stringify(document.getElementById('customerVideo'))}`)
         document.getElementById('customerVideo').playing ? addLog("Customer video is playing", 'error') : console.log("Customer video is NOT playing", 'error');
     }, 1000);
 }
