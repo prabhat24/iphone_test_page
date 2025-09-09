@@ -279,7 +279,7 @@ checkPermissions();
 
 [
     'abort', 'canplay', 'canplaythrough', 'durationchange', 'emptied', 'ended',
-    'error', 'loadeddata', 'loadedmetadata', 'loadstart', 'pause', 'play', 'playing', 'ratechange', 'seeked', 'seeking', 'stalled', 'suspend',
+    'error', 'loadeddata', 'loadedmetadata', 'loadstart', 'pause', 'play', 'playing', 'ratechange', 'seeked', 'seeking', 'stalled',
     'volumechange', 'waiting'
 ].forEach(event => {
     agentVideo.addEventListener(event, () => {
