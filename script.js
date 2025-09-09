@@ -451,7 +451,7 @@ function copyLogsToClipboard() {
         // Use the modern clipboard API if available
         if (navigator.clipboard && window.isSecureContext) {
             navigator.clipboard.writeText(allLogsText).then(() => {
-                addLog('Logs copied to clipboard successfully!', 'info');
+                // addLog('Logs copied to clipboard successfully!', 'info');
             }).catch(err => {
                 addLog('Failed to copy logs to clipboard: ' + err.message, 'error');
                 fallbackCopyToClipboard(allLogsText);
@@ -479,12 +479,6 @@ function fallbackCopyToClipboard(text) {
         
         const successful = document.execCommand('copy');
         document.body.removeChild(textArea);
-        
-        if (successful) {
-            addLog('Logs copied to clipboard using fallback method!', 'info');
-        } else {
-            addLog('Failed to copy logs to clipboard', 'error');
-        }
     } catch (err) {
         addLog('Fallback copy failed: ' + err.message, 'error');
     }
@@ -493,5 +487,4 @@ function fallbackCopyToClipboard(text) {
 // Function to scroll to the latest log entry
 function goToLatestLog() {
     output.scrollTop = output.scrollHeight;
-    addLog('Scrolled to latest log entry', 'info');
 }
