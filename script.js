@@ -1,3 +1,9 @@
+Object.defineProperty(HTMLMediaElement.prototype, 'playing', {
+    get: function(){
+        return !!(this.currentTime > 0 && !this.paused && !this.ended && this.readyState > 2);
+    }
+})
+
 const agentVideo = document.getElementById('agentVideo');
 const customerVideo = document.getElementById('customerVideo');
 const audioSelector = document.getElementById('audioSelector');
@@ -367,8 +373,6 @@ function simulateUserInteraction() {
         bubbles: true,
         cancelable: true
     });
-    
-    // Dispatch the event on the document to simulate user interaction
     document.dispatchEvent(fakeEvent);
     
     // Method 2: Create an invisible button and click it programmatically
@@ -379,11 +383,7 @@ function simulateUserInteraction() {
     invisibleButton.style.height = '1px';
     invisibleButton.style.opacity = '0';
     document.body.appendChild(invisibleButton);
-    
-    // Programmatically click the button
     invisibleButton.click();
-    
-    // Remove the button
     document.body.removeChild(invisibleButton);
     
     // Method 3: Try to enable audio context (for audio autoplay)
@@ -402,7 +402,6 @@ function simulateUserInteraction() {
     addLog(`[Interaction] Simulated user interaction for autoplay`, 'info');
 }
 
-// Function to start playing video with user interaction simulation
 function startPlayingVideoWithInteraction() {
     // First simulate user interaction
     simulateUserInteraction();
@@ -410,6 +409,7 @@ function startPlayingVideoWithInteraction() {
     // Small delay to ensure the interaction is registered
     setTimeout(() => {
         startPlayingVideo();
+        document.getElementById('customerVideo').playing ? addLog("Customer video is playing", 'error') : console.log("Customer video is NOT playing", 'error');
     }, 1000);
 }
 
