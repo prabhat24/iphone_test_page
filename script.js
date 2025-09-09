@@ -313,20 +313,20 @@ document.addEventListener("visibilitychange", () => {
     addLog(`[Visibility] Document visibility changed: ${document.visibilityState}`, 'info');
 
     // Play agentVideo when page becomes visible
-    if (document.visibilityState === 'visible') {
-        try {
-            agentVideo.play().then(() => {
-                console.log(`[Visibility] agentVideo resumed playing`);
-                addLog(`[Visibility] agentVideo resumed playing`, 'info');
-            }).catch(err => {
-                console.log(`[Visibility] Error playing agentVideo:`, err);
-                addLog(`[Visibility] Error playing agentVideo: ${err.message}`, 'error');
-            });
-        } catch (err) {
-            console.log(`[Visibility] Error playing agentVideo:`, err);
-            addLog(`[Visibility] Error playing agentVideo: ${err.message}`, 'error');
-        }
-    }
+    // if (document.visibilityState === 'visible') {
+    //     try {
+    //         agentVideo.play().then(() => {
+    //             console.log(`[Visibility] agentVideo resumed playing`);
+    //             addLog(`[Visibility] agentVideo resumed playing`, 'info');
+    //         }).catch(err => {
+    //             console.log(`[Visibility] Error playing agentVideo:`, err);
+    //             addLog(`[Visibility] Error playing agentVideo: ${err.message}`, 'error');
+    //         });
+    //     } catch (err) {
+    //         console.log(`[Visibility] Error playing agentVideo:`, err);
+    //         addLog(`[Visibility] Error playing agentVideo: ${err.message}`, 'error');
+    //     }
+    // }
 });
 
 window.addEventListener("focus", () => {
