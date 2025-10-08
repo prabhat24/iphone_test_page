@@ -329,9 +329,9 @@ document.addEventListener("visibilitychange", () => {
     // }
 });
 
-// window.addEventListener("focus", () => {
-//     startPlayingVideoWithInteraction();
-// });
+window.addEventListener("focus", () => {
+    startPlayingVideoWithInteraction();
+});
 
 startPlayingVideo = () => {
     console.log("[start] why didnt you play here")
