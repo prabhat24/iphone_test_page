@@ -13,6 +13,11 @@ let customerStream = 'none';
 let audStream = 'none';
 let devices = [];
 
+// Video monitoring variables
+let localVideoMonitor = null;
+let remoteVideoMonitor = null;
+let isMonitoringActive = false;
+
 gainPermissions();
 
 // agentVideo.addEventListener('click', () => {
@@ -28,10 +33,19 @@ function startLocalVideo() {
 
 function stopLocalVideo() {
     console.log("Stop")
-    customerStream.getTracks().forEach(track => {
-        track.stop();
-    });
-    customerStream = "none"
+    if (customerStream !== 'none') {
+        customerStream.getTracks().forEach(track => {
+            track.stop();
+        });
+        customerStream = "none";
+        
+        // Stop monitoring for local video if active
+        if (isMonitoringActive && localVideoMonitor) {
+            VideoPlayerMonitorFactory.destroy('local');
+            localVideoMonitor = null;
+            addLog('Stopped monitoring for Customer Video (stream stopped)', 'info');
+        }
+    }
 }
 
 audioSelector.addEventListener('change', async function () {
@@ -107,6 +121,16 @@ async function startCustomerVideo() {
             });
             customerVideo.srcObject = customerStream;
             attachTrackEvents(customerStream, "customer")
+            
+            // If monitoring is active, restart monitoring for the new video stream
+            if (isMonitoringActive && localVideoMonitor) {
+                // Destroy existing monitor
+                VideoPlayerMonitorFactory.destroy('local');
+                // Create new monitor for the updated video element
+                localVideoMonitor = VideoPlayerMonitorFactory.getLocal(customerVideo);
+                localVideoMonitor.startMonitoring();
+                addLog('Restarted monitoring for updated Customer Video', 'info');
+            }
         }
         catch (err) {
             console.log(err);
@@ -489,3 +513,85 @@ function fallbackCopyToClipboard(text) {
 function goToLatestLog() {
     output.scrollTop = output.scrollHeight;
 }
+
+// Video Monitoring Functions
+function startVideoMonitoring() {
+    if (isMonitoringActive) {
+        addLog('Video monitoring is already active', 'warning');
+        return;
+    }
+
+    try {
+        if (typeof VideoPlayerMonitorFactory === 'undefined') {
+            addLog('VideoPlayerMonitorFactory is not available. Make sure video-monitor.js is loaded.', 'error');
+            return;
+        }
+
+        // Start monitoring for customer video (local)
+        if (customerVideo) {
+            localVideoMonitor = VideoPlayerMonitorFactory.getLocal(customerVideo);
+            localVideoMonitor.startMonitoring();
+            addLog('Started monitoring Customer Video (local)', 'info');
+        }
+
+        // Start monitoring for agent video (remote)
+        if (agentVideo) {
+            remoteVideoMonitor = VideoPlayerMonitorFactory.getRemote(agentVideo);
+            remoteVideoMonitor.startMonitoring();
+            addLog('Started monitoring Agent Video (remote)', 'info');
+        }
+
+        isMonitoringActive = true;
+        addLog('Video monitoring system activated', 'info');
+    } catch (error) {
+        addLog(`Error starting video monitoring: ${error.message}`, 'error');
+    }
+}
+
+function stopVideoMonitoring() {
+    if (!isMonitoringActive) {
+        addLog('Video monitoring is not currently active', 'warning');
+        return;
+    }
+
+    try {
+        // Destroy all monitors
+        if (typeof VideoPlayerMonitorFactory !== 'undefined') {
+            VideoPlayerMonitorFactory.destroyAll();
+        }
+
+        localVideoMonitor = null;
+        remoteVideoMonitor = null;
+        isMonitoringActive = false;
+        addLog('Video monitoring system deactivated', 'info');
+    } catch (error) {
+        addLog(`Error stopping video monitoring: ${error.message}`, 'error');
+    }
+}
+
+function showMonitorStatus() {
+    addLog(`Video Monitoring Status: ${isMonitoringActive ? 'ACTIVE' : 'INACTIVE'}`, 'info');
+    
+    if (isMonitoringActive) {
+        addLog(`Local Video Monitor: ${localVideoMonitor ? 'ACTIVE' : 'INACTIVE'}`, 'info');
+        addLog(`Remote Video Monitor: ${remoteVideoMonitor ? 'ACTIVE' : 'INACTIVE'}`, 'info');
+        
+        if (localVideoMonitor) {
+            const localMetadata = localVideoMonitor.logMetaData(false);
+            addLog(`Customer Video Metadata: ${localMetadata}`, 'info');
+        }
+        
+        if (remoteVideoMonitor) {
+            const remoteMetadata = remoteVideoMonitor.logMetaData(false);
+            addLog(`Agent Video Metadata: ${remoteMetadata}`, 'info');
+        }
+    }
+}
+
+// Auto-start video monitoring when the page loads
+document.addEventListener('DOMContentLoaded', function() {
+    // Start monitoring after a short delay to ensure everything is loaded
+    setTimeout(() => {
+        startVideoMonitoring();
+    }, 2000);
+});

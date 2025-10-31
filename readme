@@ -1,3 +1,80 @@
-add 2 files named with the respective formats in the same folder:
-Believer.mp4
-Believer.ogg
+## iPhone Video Testing Page with Enhanced Video Monitoring
+
+This test page now includes comprehensive video monitoring capabilities using the VideoPlayerMonitor system.
+
+### Features
+
+#### Original Features:
+- Video call testing with local (customer) and remote (agent) video elements
+- Permission logging for camera, microphone, and location
+- Audio output device selection
+- Real-time console logging with timestamp and log levels
+- Device change detection
+- Visibility and focus event tracking
+
+#### New Video Monitoring Features:
+- **Advanced Video Event Monitoring**: Tracks video playback events (playing, paused, ended, stalled, waiting)
+- **Detailed Metadata Logging**: Records video state information including currentTime, readyState, networkState, etc.
+- **Timeout-based Status Reporting**: Automatically logs warnings if videos don't start playing or encounter issues
+- **Factory Pattern Management**: Clean creation and destruction of video monitors
+- **Integrated Logging**: Video monitor events are displayed in the same console as other logs
+
+### File Structure
+
+- `index.html` - Main HTML page with video elements and controls
+- `script.js` - Core functionality including permissions, device management, and video monitoring integration
+- `video-monitor.js` - VideoPlayerMonitor and VideoPlayerMonitorFactory implementation
+- `style.css` - Additional styling
+- `big_buck_av1_full.mp4` - Test video file for agent video
+
+### Video Monitoring Usage
+
+The VideoPlayerMonitor system provides comprehensive monitoring for both local (customer webcam) and remote (agent video file) video elements:
+
+#### Key Classes:
+- **VideoPlayerMonitor**: Monitors individual video elements, tracks events, and provides detailed logging
+- **VideoPlayerMonitorFactory**: Manages monitor instances using a factory pattern
+
+#### Monitoring Events:
+- `playing` - Video starts playing
+- `pause` - Video is paused
+- `ended` - Video playback ends
+- `stalled` - Video stalls due to network issues
+- `waiting` - Video is waiting for data to continue playback
+
+#### Controls:
+- **Start Video Monitoring**: Begins monitoring both customer and agent videos
+- **Stop Video Monitoring**: Stops all video monitoring and cleans up resources
+- **Show Monitor Status**: Displays current monitoring status and video metadata
+
+#### Automatic Features:
+- Video monitoring starts automatically 2 seconds after page load
+- Monitors are automatically restarted when customer video stream changes
+- Timeout warnings are logged if videos don't start playing within 15 seconds
+- Comprehensive metadata is logged with each event
+
+### Browser Compatibility
+
+The page works on both desktop and mobile browsers, with special handling for:
+- iOS Safari autoplay restrictions
+- Android audio output device limitations
+- Cross-browser permission API differences
+
+### Usage Instructions
+
+1. Open the page in a browser (preferably on a mobile device for testing)
+2. Grant camera and microphone permissions when prompted
+3. The system will automatically start video monitoring
+4. Use the control buttons to manage video streams and monitoring
+5. Monitor the live console for detailed video event logging
+6. Copy logs to clipboard for analysis
+
+The VideoPlayerMonitor integration provides detailed insights into video playback behavior, making it easier to debug video-related issues in web applications.
+
+---
+
+### Additional Media Files
+
+To extend testing capabilities, you can add additional video files:
+- Believer.mp4
+- Believer.ogg

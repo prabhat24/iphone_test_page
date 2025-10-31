@@ -95,6 +95,30 @@
         .copy-button:hover {
             background-color: #555;
         }
+
+        .monitor-button {
+            background-color: #2d5a2d;
+            color: #00ff00;
+            border: 1px solid #0f0;
+            padding: 8px 16px;
+            margin: 5px;
+            cursor: pointer;
+            font-family: monospace;
+            border-radius: 4px;
+            transition: background-color 0.2s;
+        }
+
+        .monitor-button:hover {
+            background-color: #3d6a3d;
+        }
+
+        .monitor-section {
+            margin-top: 20px;
+            padding: 15px;
+            border: 1px solid #0f0;
+            border-radius: 5px;
+            background-color: rgba(0, 255, 0, 0.05);
+        }
     </style>
 
     <body>
@@ -118,8 +142,16 @@
         <select id="audioSelector"></select>
         <button onclick="startLocalVideo()">Start Local Video</button>
         <button onclick="stopLocalVideo()">Stop Local Video</button>
+        <br><br>
+        <div class="monitor-section">
+            <h3>Video Monitoring Controls</h3>
+            <button class="monitor-button" onclick="startVideoMonitoring()">Start Video Monitoring</button>
+            <button class="monitor-button" onclick="stopVideoMonitoring()">Stop Video Monitoring</button>
+            <button class="monitor-button" onclick="showMonitorStatus()">Show Monitor Status</button>
+        </div>
     </body>
 
+    <script src="video-monitor.js"></script>
     <script src="script.js"></script>
     <link rel="stylesheet" href="style.css">
 </center>
