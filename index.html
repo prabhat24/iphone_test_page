@@ -149,9 +149,17 @@
             <button class="monitor-button" onclick="stopVideoMonitoring()">Stop Video Monitoring</button>
             <button class="monitor-button" onclick="showMonitorStatus()">Show Monitor Status</button>
         </div>
+        <div class="monitor-section">
+            <h3>Picture-in-Picture Controls (Customer Video)</h3>
+            <button class="monitor-button" onclick="enterPiPMode()">📱 Enter PiP Mode</button>
+            <button class="monitor-button" onclick="exitPiPMode()">❌ Exit PiP Mode</button>
+            <button class="monitor-button" onclick="togglePiPMode()">🔄 Toggle PiP</button>
+            <button class="monitor-button" onclick="showPiPStatus()">📊 Show PiP Status</button>
+        </div>
     </body>
 
     <script src="video-monitor.js"></script>
+    <script src="pip-handler.js"></script>
     <script src="script.js"></script>
     <link rel="stylesheet" href="style.css">
 </center>

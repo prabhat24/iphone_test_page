@@ -18,6 +18,11 @@ let localVideoMonitor = null;
 let remoteVideoMonitor = null;
 let isMonitoringActive = false;
 
+// Initialize PiP handler and other components
+window.addEventListener('load', () => {
+    initPiPHandler();
+});
+
 gainPermissions();
 
 // agentVideo.addEventListener('click', () => {
@@ -121,6 +126,9 @@ async function startCustomerVideo() {
             });
             customerVideo.srcObject = customerStream;
             attachTrackEvents(customerStream, "customer")
+            
+            // Initialize or reinitialize PiP handler with the stream
+            initPiPHandler();
             
             // If monitoring is active, restart monitoring for the new video stream
             if (isMonitoringActive && localVideoMonitor) {
@@ -353,9 +361,9 @@ document.addEventListener("visibilitychange", () => {
     // }
 });
 
-// window.addEventListener("focus", () => {
-//     startPlayingVideoWithInteraction();
-// });
+window.addEventListener("focus", () => {
+    startPlayingVideoWithInteraction();
+});
 
 startPlayingVideo = () => {
     console.log("[start] why didnt you play here")
@@ -370,7 +378,7 @@ startPlayingVideo = () => {
                 addLog(`[Focus] agentVideo resumed playing`, 'info');
             }).catch(err => {
                 console.log(`[Focus] Error playing agentVideo:`, err);
-                addLog(`[Focus] Error playing agentVideo: ${err.message}`, 'error');
+                addLog(`[Focus] Error playing agentVideo: ${err}`, 'error');
             });
         } catch (err) {
             console.log(`[Focus] Error playing agentVideo:`, err);
@@ -457,9 +465,9 @@ function enableAutoplayOnFirstInteraction() {
 }
 
 // Add listeners for real user interactions (as backup)
-document.addEventListener('click', enableAutoplayOnFirstInteraction, { once: true });
-document.addEventListener('touchstart', enableAutoplayOnFirstInteraction, { once: true });
-document.addEventListener('keydown', enableAutoplayOnFirstInteraction, { once: true });
+// document.addEventListener('click', enableAutoplayOnFirstInteraction, { once: true });
+// document.addEventListener('touchstart', enableAutoplayOnFirstInteraction, { once: true });
+// document.addEventListener('keydown', enableAutoplayOnFirstInteraction, { once: true });
 
 if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', startPlayingVideoWithInteraction);
